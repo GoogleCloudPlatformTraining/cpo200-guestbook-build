@@ -24,8 +24,11 @@ git clone https://github.com/GoogleCloudPlatformTraining/cpo200-guestbook
 # Retrieve the project ID
 PROJECT_ID=$(curl -s 'http://metadata/computeMetadata/v1/project/project-id' -H 'Metadata-Flavor: Google')
 
+# Retrieve the Container Registry Prefix
+GCR_PREFIX=$(curl -s 'http://metadata/computeMetadata/v1/instance/attributes/prefix' -H 'Metadata-Flavor: Google')
+
 # Build the container with the expected tag
-docker build -t gcr.io/$PROJECT_ID/guestbook  cpo200-guestbook
+docker build -t $GCR_PREFIX/$PROJECT_ID/guestbook  cpo200-guestbook
 
 # Shutdown the instance
 shutdown -h now
